@@ -1,20 +1,21 @@
 import React,  { useMemo } from 'react'
 import { Redirect, useParams } from 'react-router-dom'
+import { heroImages } from '../../helpers/heroImages';
 
 import { getHeroeById } from '../../selectors/getHeroesById';
 
 export const HeroesScreen = ({ history }) => {
-
+  
   const { heroeId } = useParams();
   const hero = useMemo(() => getHeroeById(heroeId), [heroeId]);
-
+  
   if (!hero) return <Redirect to='/' />
 
   const handleReturn = () => {
     (history.length <= 2) ? history.push('/') :
-      history.goBack();
+    history.goBack();
   }
-
+  
   const {
     id,
     superhero,
@@ -24,11 +25,13 @@ export const HeroesScreen = ({ history }) => {
     characters,
   } = hero;
   console.log(id);
+
   return (
     <div className='row mt-5'>
       <div className='col-4'>
         <img
-          src={`../assets/heroes/${heroeId}.jpg`}
+          // src={`../assets/heroes/${heroeId}.jpg`}
+          src={heroImages(`./${heroeId}.jpg`).default}  
           alt={superhero}
           className='img-thumbnail animate__animated animate__fadeInLeft'
         />
